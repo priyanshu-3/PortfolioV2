@@ -16,6 +16,15 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "Multi-Agent Software Development Pipeline",
+    description:
+      "Built an autonomous RAG-based multi-agent system (Planner, Builder, Reviewer) that turns requirements into reviewed PRs. Engineered a Planner agent that decomposes PDF/TXT/MD specs into dependency-ordered GitHub issues with acceptance criteria. Developed Builder and Reviewer agents that write multi-file code into draft PRs and post inline diff reviews with verdicts. Designed a label-driven orchestrator with a 5-round review cap, human escalation, rate-limit backoff and Gemini model fallback.",
+    tags: ["Python", "Google Gemini API", "RAG", "GitHub REST API", "PyGitHub", "pdfplumber"],
+    github: "https://github.com/priyanshu-3/dev-agent-pipeline",
+    gradient: "from-blue-500/20 via-indigo-500/10 to-transparent",
+    emoji: "🤖",
+  },
+  {
     title: "Shishu-Sneh (Smart Baby's First Year Guide)",
     description:
       "Engineered an offline-first infant healthcare app utilizing Room DB and Supabase PostgreSQL for local persistence and cloud sync. Developed a Spring Boot backend to automate immunization tracking against the Indian NIS via Android WorkManager notifications. Integrated Google Gemini API to build a dynamic nutrition engine processing real-time user ingredients for localized recipes. Implemented data visualization dashboards using MPAndroidChart to parse health logs and render growth trends.",

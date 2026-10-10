@@ -29,6 +29,8 @@ const skillCategories = [
       "Google Gemini API",
       "Prompt Engineering",
       "Agent Creation",
+      "Multi-Agent Systems",
+      "RAG",
       "XGBoost",
     ],
     gradient: "from-emerald-500/15 via-green-500/8 to-transparent",
