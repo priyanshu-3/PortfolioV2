@@ -58,12 +58,16 @@ export function ContactForm() {
         }
     };
 
-    const inputClass = "w-full bg-transparent border-b border-gray-700 py-4 text-white placeholder-gray-500 outline-none focus:border-white transition-colors duration-300 text-base";
+    const inputClass = "w-full bg-transparent border-b border-ink/35 py-4 text-ink placeholder:text-ink/45 outline-none focus:border-ink transition-colors duration-300 text-base";
 
     return (
         <>
-        <main className="py-20 px-6" ref={ref}>
-            <div className="max-w-screen-xl mx-auto">
+        <main className="py-24 px-4 sm:px-6 lg:px-10 text-ink" ref={ref}>
+            <div className="max-w-6xl mx-auto">
+                <div className="mb-14 flex items-center justify-between border-b border-ink pb-3 font-label text-[9px] uppercase tracking-[0.2em] md:mb-20 md:text-[10px]">
+                    <span>No. 04</span>
+                    <span>Contact</span>
+                </div>
                 <motion.div
                     className="grid lg:grid-cols-2 gap-16 lg:gap-24"
                     initial={{ opacity: 0, y: 50 }}
@@ -77,30 +81,31 @@ export function ContactForm() {
                             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                             transition={{ duration: 0.8, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.99] as const }}
                         >
-                            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight italic">
-                                Let's start a<br />
-                                project together
+                            <h2 className="font-display text-[2.6rem] font-medium uppercase leading-[0.98] tracking-[0.02em] sm:text-5xl md:text-6xl">
+                                <span className="mr-[0.03em] font-script text-[1.3em] font-normal normal-case leading-[0.7]">L</span>et's start<br />
+                                a project<br />
+                                together
                             </h2>
-                            <p className="mt-8 text-gray-400 text-lg max-w-md leading-relaxed">
+                            <p className="mt-8 text-ink/75 text-lg max-w-md leading-relaxed">
                                 I develop clear websites with code that empower startups and businesses capture new leads and accelerate their growth.
                             </p>
                         </motion.div>
 
                         <motion.div
-                            className="mt-16 lg:mt-0"
+                            className="mt-14"
                             initial={{ opacity: 0 }}
                             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
                         >
-                            <p className="text-xs text-gray-500 uppercase tracking-[0.2em] mb-4">Socials</p>
+                            <p className="font-label text-[9px] font-bold uppercase tracking-[0.2em] mb-4">Socials</p>
                             <div className="flex items-center gap-6">
-                                <a href="https://www.linkedin.com/in/priyanshu-mehra-060070245/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">
+                                <a href="https://www.linkedin.com/in/priyanshu-mehra-060070245/" target="_blank" rel="noopener noreferrer" className="font-display text-lg italic text-ink/75 underline-offset-4 hover:text-poppy hover:underline transition-colors">
                                     LinkedIn
                                 </a>
-                                <a href="https://www.instagram.com/priyanshu_3/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">
+                                <a href="https://www.instagram.com/priyanshu_3/" target="_blank" rel="noopener noreferrer" className="font-display text-lg italic text-ink/75 underline-offset-4 hover:text-poppy hover:underline transition-colors">
                                     Instagram
                                 </a>
-                                <a href="https://github.com/priyanshu-3" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors text-sm">
+                                <a href="https://github.com/priyanshu-3" target="_blank" rel="noopener noreferrer" className="font-display text-lg italic text-ink/75 underline-offset-4 hover:text-poppy hover:underline transition-colors">
                                     Github
                                 </a>
                             </div>
@@ -158,9 +163,9 @@ export function ContactForm() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full py-4 bg-white text-black font-medium text-lg rounded-full hover:bg-gray-200 active:bg-gray-300 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full py-5 bg-ink text-mark font-label text-[11px] font-bold uppercase tracking-[0.22em] hover:bg-poppy transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {isSubmitting ? 'Sending...' : 'Submit'}
+                                {isSubmitting ? 'Sending…' : 'Send message ↗'}
                             </button>
                         </div>
                     </motion.form>
@@ -176,14 +181,12 @@ export function ContactForm() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.95 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="fixed top-24 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-auto z-[9999]"
+                    className="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-auto z-[9999]"
                 >
-                    <div className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl shadow-black/40 md:min-w-[320px]">
+                    <div className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-mark border border-ink text-ink shadow-[4px_4px_0_0_rgb(var(--ink))] md:min-w-[320px]">
                         {/* Icon */}
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-full shrink-0 ${
-                            submitStatus === 'success' 
-                                ? 'bg-white text-black' 
-                                : 'bg-white/20 text-white'
+                        <div className={`flex items-center justify-center w-10 h-10 shrink-0 text-mark ${
+                            submitStatus === 'success' ? 'bg-ink' : 'bg-poppy'
                         }`}>
                             {submitStatus === 'success' ? (
                                 <Check className="w-5 h-5" strokeWidth={2.5} />
@@ -194,10 +197,10 @@ export function ContactForm() {
 
                         {/* Text */}
                         <div>
-                            <p className="text-white font-medium text-sm">
+                            <p className="font-display font-medium">
                                 {submitStatus === 'success' ? 'Success' : 'Something went wrong'}
                             </p>
-                            <p className="text-gray-400 text-xs mt-0.5">
+                            <p className="text-ink/65 text-sm mt-0.5">
                                 {submitStatus === 'success' 
                                     ? 'I will contact you shortly.' 
                                     : 'Please try again later.'}
@@ -207,7 +210,8 @@ export function ContactForm() {
                         {/* Dismiss */}
                         <button 
                             onClick={() => setSubmitStatus('idle')}
-                            className="ml-auto text-gray-500 hover:text-white transition-colors p-1"
+                            aria-label="Dismiss"
+                            className="ml-auto text-ink/50 hover:text-ink transition-colors p-1"
                         >
                             <X className="w-4 h-4" />
                         </button>
@@ -215,7 +219,7 @@ export function ContactForm() {
 
                     {/* Auto-dismiss progress bar */}
                     <motion.div 
-                        className="h-[2px] bg-white/30 rounded-full mt-1 mx-2"
+                        className="h-[2px] bg-poppy mt-1 mx-2"
                         initial={{ width: "100%" }}
                         animate={{ width: "0%" }}
                         transition={{ duration: 4, ease: "linear" }}

@@ -12,7 +12,22 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
+      fontFamily: {
+        display: ['"Bodoni Moda"', '"Bodoni 72"', 'Didot', '"Playfair Display"', 'Georgia', 'serif'],
+        script: ['"Pinyon Script"', '"Snell Roundhand"', '"Apple Chancery"', 'cursive'],
+        label: ['Syncopate', 'Michroma', 'Eurostile', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+      },
       colors: {
+        // The hero poster's palette, usable with opacity (e.g. border-ink/20).
+        // paper, ink, mark and poppy swap in the dark theme (see index.css).
+        paper: 'rgb(var(--paper) / <alpha-value>)',
+        ink: 'rgb(var(--ink) / <alpha-value>)',
+        mark: 'rgb(var(--mark) / <alpha-value>)',
+        poppy: 'rgb(var(--poppy) / <alpha-value>)',
+        field: '#2b3226',
+        haze: '#b4b4ad',
+        // Always light, for type set on the dark field band in either theme
+        cream: '#f5f2ec',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

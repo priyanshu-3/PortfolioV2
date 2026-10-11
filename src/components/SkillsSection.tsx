@@ -1,9 +1,9 @@
 import { ScrollSection } from "@/components/ScrollSection";
 import { SkillSectionBlock } from "@/components/ui/team-section-block-shadcnui";
 
-export function SkillsPage() {
+export function SkillsSection() {
   return (
-    <ScrollSection id="skills" className="bg-black min-h-screen">
+    <ScrollSection id="skills">
       <SkillSectionBlock />
     </ScrollSection>
   );

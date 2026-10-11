@@ -1,27 +1,18 @@
-import { Badge } from "@/components/ui/badge";
-import { GlowCard } from "@/components/ui/spotlight-card";
-import {
-  motion,
-  type Variants,
-} from "framer-motion";
-
+import { motion, type Variants } from "framer-motion";
+import { PosterHeading } from "@/components/poster/PosterHeading";
+import { Mark } from "@/components/poster/marks";
 
 /* ─────────────────────────────────────────────
    Skill categories data
    ───────────────────────────────────────────── */
 const skillCategories = [
   {
-    emoji: "🖥️",
     title: "Languages & Databases",
     subtitle: "Core Stack",
     bio: "Building robust applications using versatile programming languages and scalable database solutions.",
     skills: ["Java", "Python", "JavaScript", "HTML", "CSS", "MySQL", "PostgreSQL"],
-    gradient: "from-blue-500/15 via-cyan-500/8 to-transparent",
-    glowColor: "rgba(99,179,237,0.3)",
-    accentColor: "#63b3ed",
   },
   {
-    emoji: "⚙️",
     title: "AI & Machine Learning",
     subtitle: "Intelligence Layer",
     bio: "Developing intelligent features, integrating LLMs, and creating specialized AI agents.",
@@ -33,29 +24,18 @@ const skillCategories = [
       "RAG",
       "XGBoost",
     ],
-    gradient: "from-emerald-500/15 via-green-500/8 to-transparent",
-    glowColor: "rgba(72,187,120,0.3)",
-    accentColor: "#48bb78",
   },
   {
-    emoji: "🛠️",
     title: "Tools & DevOps",
     subtitle: "Build & Deploy",
     bio: "Streamlining development pipelines, version control, and managing reliable cloud infrastructure.",
     skills: ["Git", "GitHub", "Maven", "Gradle", "Supabase"],
-    gradient: "from-orange-500/15 via-amber-500/8 to-transparent",
-    glowColor: "rgba(246,173,85,0.3)",
-    accentColor: "#f6ad55",
   },
   {
-    emoji: "⚡",
     title: "Developer Tools",
     subtitle: "Productivity",
     bio: "Leveraging cutting-edge AI coding assistants and intelligent tooling to accelerate development.",
     skills: ["GitHub Copilot", "Cursor", "Codex", "Claude", "Chat2DB"],
-    gradient: "from-purple-500/15 via-violet-500/8 to-transparent",
-    glowColor: "rgba(159,122,234,0.3)",
-    accentColor: "#9f7aea",
   },
 ];
 
@@ -71,80 +51,38 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30, scale: 0.93 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: { duration: 0.6, ease: [0.6, 0.05, 0.01, 0.9] },
   },
 };
 
 /* ─────────────────────────────────────────────
-   Individual skill category card
+   One category, printed as a cell of the grid
    ───────────────────────────────────────────── */
-function SkillCategoryCard({
-  cat,
-}: {
-  cat: (typeof skillCategories)[0];
-}) {
+function SkillCategoryCard({ cat, index }: { cat: (typeof skillCategories)[0]; index: number }) {
   return (
-    <motion.div variants={itemVariants} className="h-full">
-      <div className="relative h-full">
-        <GlowCard 
-          customSize={true}
-          glowColor={
-            cat.title === "Frontend" ? "blue" : 
-            cat.title === "Backend" ? "green" : 
-            cat.title === "Blockchain" ? "purple" : "orange"
-          }
-          className="!rounded-3xl !bg-black/40 backdrop-blur-xl h-full !p-0"
-        >
-          {/* Static gradient overlay */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-[0.05]`}
-          />
-
-          <div className="relative z-10 p-7">
-            {/* Emoji icon removed */}
-
-            {/* Title & subtitle */}
-            <div className="mb-1">
-              <h3 className="text-2xl font-bold text-white">
-                {cat.title}
-              </h3>
-              <Badge
-                variant="secondary"
-                className="mt-1 bg-white/8 text-[10px] uppercase tracking-widest text-white/40"
-              >
-                {cat.subtitle}
-              </Badge>
-            </div>
-
-            {/* Bio */}
-            <p className="mb-5 mt-3 text-sm leading-relaxed text-white/50">
-              {cat.bio}
-            </p>
-
-            {/* Divider */}
-            <div className="mb-5 h-px bg-white/8" />
-
-            {/* Skill pills */}
-            <div className="flex flex-wrap gap-2">
-              {cat.skills.map((skill) => (
-                <Badge
-                  key={skill}
-                  variant="outline"
-                  className="border-white/10 bg-white/5 text-xs font-medium text-white/70"
-                >
-                  {skill}
-                </Badge>
-              ))}
-            </div>
-
-          </div>
-        </GlowCard>
+    <motion.div variants={itemVariants} className="group border-b border-r border-ink p-7 md:p-10">
+      <div className="flex items-start justify-between gap-4">
+        <span className="font-label text-[9px] font-bold uppercase tracking-[0.2em] md:text-[10px]">{cat.subtitle}</span>
+        <span className="font-display text-4xl leading-none text-ink/80 transition-colors group-hover:text-poppy md:text-5xl">
+          {String(index + 1).padStart(2, "0")}
+        </span>
       </div>
+
+      <h3 className="mt-6 font-display text-3xl font-medium leading-tight md:text-4xl">{cat.title}</h3>
+      <p className="mt-4 max-w-md leading-relaxed text-ink/75">{cat.bio}</p>
+
+      <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-ink/25 pt-6 font-label text-[9px] font-bold uppercase tracking-[0.14em] md:text-[10px]">
+        {cat.skills.map((skill) => (
+          <li key={skill} className="flex items-center gap-2">
+            <Mark />
+            {skill}
+          </li>
+        ))}
+      </ul>
     </motion.div>
   );
 }
@@ -154,41 +92,28 @@ function SkillCategoryCard({
    ───────────────────────────────────────────── */
 export function SkillSectionBlock() {
   return (
-    <section
-      aria-labelledby="skills-heading"
-      className="relative w-full overflow-hidden bg-black px-4 pt-24 pb-24 sm:px-6 lg:px-10"
-    >
-
+    <section aria-labelledby="skills-heading" className="relative w-full px-4 py-24 text-ink sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -24 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }}
-          className="mb-16 text-center"
+          id="skills-heading"
         >
-
-
-          <motion.h1
-            id="skills-heading"
-            className="mb-4 text-5xl font-black tracking-tight text-white md:text-6xl"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.6 }}
-          >
-            Skills &amp; Technologies
-          </motion.h1>
+          <PosterHeading number="02" label="What I work with" title="Skills & Technologies" />
         </motion.div>
 
-        {/* 2×2 grid */}
+        {/* 2×2 grid, ruled like a printed table */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
-          className="grid gap-6 sm:grid-cols-2 items-stretch"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid border-l border-t border-ink sm:grid-cols-2"
         >
-          {skillCategories.map((cat) => (
-            <SkillCategoryCard key={cat.title} cat={cat} />
+          {skillCategories.map((cat, i) => (
+            <SkillCategoryCard key={cat.title} cat={cat} index={i} />
           ))}
         </motion.div>
       </div>

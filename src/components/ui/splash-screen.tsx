@@ -14,7 +14,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black overflow-hidden"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-paper overflow-hidden"
       initial={{ y: 0 }}
       exit={{ 
         y: "-100%", 
@@ -22,12 +22,12 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       }}
     >
       <div className="relative flex items-center justify-center">
-        {/* Premium ambient glow */}
+        {/* A soft poppy-red bloom behind the word */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-orange-500/20 via-purple-500/10 to-rose-500/20 blur-[100px] pointer-events-none"
+          className="absolute h-[400px] w-[400px] rounded-full bg-poppy/10 blur-[100px] pointer-events-none"
         />
         
         <motion.div
@@ -37,8 +37,8 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
           <div className="overflow-visible pb-6">
             <AnimatedText 
               text="Namaste."
-              textClassName="text-6xl font-black tracking-tight text-white md:text-8xl"
-              underlineClassName="text-orange-500 -bottom-8"
+              textClassName="font-display text-6xl font-medium tracking-tight text-ink md:text-8xl"
+              underlineClassName="text-poppy -bottom-8"
               underlineDuration={1}
             />
           </div>
@@ -47,7 +47,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
             initial={{ opacity: 0, filter: "blur(10px)", y: -10 }}
             animate={{ opacity: 0.4, filter: "blur(0px)", y: 0 }}
             transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-            className="text-2xl font-medium tracking-[0.3em] text-white"
+            className="text-2xl font-medium tracking-[0.3em] text-ink"
           >
             नमस्ते
           </motion.p>
@@ -56,7 +56,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       
       {/* Loading progress bar at the bottom */}
       <motion.div 
-        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-orange-500 via-purple-500 to-rose-500"
+        className="absolute bottom-0 left-0 h-1 bg-poppy"
         initial={{ width: "0%" }}
         animate={{ width: "100%" }}
         transition={{ duration: 2.8, ease: "easeInOut" }}

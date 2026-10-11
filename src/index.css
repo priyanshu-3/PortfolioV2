@@ -3,32 +3,75 @@
 @tailwind utilities;
 
 @layer base {
+  /* The poster palette: paper, ink and poppy red, taken from the hero */
   :root {
-    --background: 0 0% 0%;
-    --foreground: 210 40% 98%;
-    --card: 0 0% 0%;
-    --card-foreground: 210 40% 98%;
-    --popover: 0 0% 0%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --radius: 0.5rem;
+    --paper: 234 232 226;
+    --ink: 58 43 39;
+    --mark: 245 242 236;
+    --poppy: 217 48 29;
+    color-scheme: light;
+
+    --background: 45 16% 90.2%;
+    --foreground: 12.6 19.6% 19%;
+    --card: 42.9 22.6% 93.9%;
+    --card-foreground: 12.6 19.6% 19%;
+    --popover: 42.9 22.6% 93.9%;
+    --popover-foreground: 12.6 19.6% 19%;
+    --primary: 6.1 76.4% 48.2%;
+    --primary-foreground: 40 31% 94.3%;
+    --secondary: 40 15.8% 85.1%;
+    --secondary-foreground: 12.6 19.6% 19%;
+    --muted: 40 15.8% 85.1%;
+    --muted-foreground: 20 9.2% 38.4%;
+    --accent: 40 15.8% 85.1%;
+    --accent-foreground: 12.6 19.6% 19%;
+    --destructive: 6.1 76.4% 48.2%;
+    --destructive-foreground: 40 31% 94.3%;
+    --border: 36.7 15.8% 77.6%;
+    --input: 36.7 15.8% 77.6%;
+    --ring: 12.6 19.6% 19%;
+    --chart-1: 6.1 76.4% 48.2%;
+    --chart-2: 95 13.6% 17.3%;
+    --chart-3: 36.7 15.8% 60%;
+    --chart-4: 12.6 19.6% 19%;
+    --chart-5: 6.1 60% 70%;
+    --radius: 0.125rem;
+
+    /* Colour names used by components written for Tailwind v4 / shadcn (e.g. ContributionSkyline) */
+    --color-background: hsl(var(--background));
+    --color-foreground: hsl(var(--foreground));
+    --color-border: hsl(var(--border));
+    --color-muted-foreground: hsl(var(--muted-foreground));
+  }
+
+  /* The dark theme: the same poster at night. Warm near-black paper, cream ink,
+     and a slightly brighter poppy so it holds its contrast. */
+  .dark {
+    --paper: 20 17 15;
+    --ink: 235 229 218;
+    --mark: 30 26 23;
+    --poppy: 229 80 58;
+    color-scheme: dark;
+
+    --background: 24 14.3% 6.9%;
+    --foreground: 38 30.8% 88.8%;
+    --card: 27 13% 10.4%;
+    --card-foreground: 38 30.8% 88.8%;
+    --popover: 27 13% 10.4%;
+    --popover-foreground: 38 30.8% 88.8%;
+    --primary: 7.5 76.4% 56.3%;
+    --primary-foreground: 24 14.3% 6.9%;
+    --secondary: 24 10% 16%;
+    --secondary-foreground: 38 30.8% 88.8%;
+    --muted: 24 10% 16%;
+    --muted-foreground: 32 9% 62%;
+    --accent: 24 10% 16%;
+    --accent-foreground: 38 30.8% 88.8%;
+    --destructive: 7.5 76.4% 56.3%;
+    --destructive-foreground: 38 30.8% 88.8%;
+    --border: 24 9% 22%;
+    --input: 24 9% 22%;
+    --ring: 38 30.8% 88.8%;
   }
 }
 
@@ -43,7 +86,12 @@
   
   body {
     @apply bg-background text-foreground;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: "Bodoni Moda", "Bodoni 72", Didot, "Playfair Display", Georgia, serif;
+  }
+
+  ::selection {
+    background: rgb(var(--poppy));
+    color: #f5f2ec;
   }
 }
 
@@ -78,4 +126,18 @@
   100% {
     transform: translateX(-100%);
   }
+}
+
+/* Switching theme: the new page grows out of the toggle in a circle (see useTheme),
+   with every element's own colour fade paused so nothing lags behind */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }

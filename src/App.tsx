@@ -1,52 +1,31 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Navigation } from "@/components/Navigation";
 import { Home } from "@/pages/Home";
-import { SkillsPage } from "@/pages/SkillsPage";
-import { ProjectsPage } from "@/pages/ProjectsPage";
 import { useEffect, useState } from "react";
 import { SplashScreen } from "@/components/ui/splash-screen";
-import { AnimatePresence } from "framer-motion";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { AnimatePresence, useReducedMotion } from "framer-motion";
+import { useLenis, smoothScrollTo } from "@/hooks/useLenis";
 
-function ScrollToHashElement() {
+/** Scrolls to the section named by the URL: "/#projects", or an old page URL like "/projects". */
+function ScrollToSection() {
   const location = useLocation();
 
   useEffect(() => {
-    const hash = location.hash;
-    if (hash) {
-      // Small delay to ensure DOM is ready
-      setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    } else if (location.pathname === "/") {
-      // If navigating to home without hash, scroll to top
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    const id = location.hash.slice(1) || location.pathname.replace(/^\/|\/$/g, "");
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const element = id ? document.getElementById(id) : null;
+      smoothScrollTo(element ?? 0);
+    }, 100);
+    return () => clearTimeout(timer);
   }, [location]);
 
   return null;
 }
 
-import { ContactPage } from "@/pages/ContactPage";
-
-function AnimatedRoutes() {
-  const location = useLocation();
-  
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/skills" element={<SkillsPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
-    </AnimatePresence>
-  );
-}
-
 function App() {
+  useLenis(!useReducedMotion());
+
   const [showSplash, setShowSplash] = useState(() => {
     // Only show splash on first visit or hard refresh, not on navigation
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
@@ -65,9 +44,12 @@ function App() {
       </AnimatePresence>
 
       <BrowserRouter>
-        {!showSplash && <Navigation />}
-        <ScrollToHashElement />
-        <AnimatedRoutes />
+        {!showSplash && <ThemeToggle />}
+        <ScrollToSection />
+        {/* Everything lives on one page; any path renders it */}
+        <Routes>
+          <Route path="*" element={<Home />} />
+        </Routes>
       </BrowserRouter>
     </>
   );
