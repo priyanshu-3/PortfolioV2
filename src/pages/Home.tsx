@@ -1,5 +1,5 @@
 import { HeroPoster } from "@/components/HeroPoster";
-import { StoryTimeline } from "@/components/story/StoryTimeline";
+import { StoryScroll } from "@/components/story/StoryScroll";
 import { SkillsSection } from "@/components/SkillsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactForm } from "@/components/ui/contact-sections";
@@ -14,8 +14,8 @@ export function Home() {
       {/* Hero: a printed poster over a field of poppies */}
       <HeroPoster />
 
-      {/* The story: education, projects, internship and work, told as a 3D timeline */}
-      <StoryTimeline />
+      {/* The story: education, projects, internship and work, told as a book you scroll through */}
+      <StoryScroll />
 
       <SkillsSection />
 

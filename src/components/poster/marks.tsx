@@ -54,3 +54,26 @@ export function Contours({ lines = 14, className = "" }: { lines?: number; class
 export function Mark({ className = "" }: { className?: string }) {
   return <span aria-hidden className={`inline-block h-[0.62em] w-[0.62em] shrink-0 border border-current ${className}`} />;
 }
+
+/** A poppy seen from above: five red petals around a dark heart. */
+export function Poppy({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg aria-hidden viewBox="0 0 100 100" className={className} style={style}>
+      {[0, 72, 144, 216, 288].map((a) => (
+        <ellipse
+          key={a}
+          cx="50"
+          cy="29"
+          rx="23"
+          ry="27"
+          transform={`rotate(${a} 50 50)`}
+          fill="rgb(var(--poppy))"
+          stroke="rgba(0,0,0,0.18)"
+          strokeWidth="1"
+        />
+      ))}
+      <circle cx="50" cy="50" r="12" fill="#1a0f0d" />
+      <circle cx="50" cy="50" r="5" fill="#6d7a50" />
+    </svg>
+  );
+}
