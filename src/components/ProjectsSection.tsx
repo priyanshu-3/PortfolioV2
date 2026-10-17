@@ -1,8 +1,8 @@
 import { ScrollSection } from "@/components/ScrollSection";
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants } from "motion/react";
 import { GithubActivity } from "@/components/GithubActivity";
-import { PosterHeading } from "@/components/poster/PosterHeading";
-import { Mark } from "@/components/poster/marks";
+import { SectionHeading } from "@/components/theme/SectionHeading";
+import { Mark } from "@/components/theme/marks";
 
 interface Project {
   title: string;
@@ -62,16 +62,17 @@ const rowVariants: Variants = {
 };
 
 const buttonClass =
-  "inline-flex items-center gap-2 border border-ink px-4 py-3 font-label text-[10px] font-bold uppercase tracking-[0.18em] transition-colors hover:bg-ink hover:text-mark";
+  "inline-flex items-center gap-2 border-2 border-line px-5 py-2.5 text-xs font-bold uppercase tracking-[0.2em] text-dim transition-colors hover:border-ink/50 hover:text-ink";
 
 export function ProjectsSection() {
   return (
     <ScrollSection id="projects" className="px-4 py-28 text-ink sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
-        <PosterHeading
+        <SectionHeading
           number="03"
           label="Selected work"
-          title="Projects"
+          title="My"
+          highlight="Projects"
           intro="Real projects from my GitHub, spanning AI, full-stack development and Android."
         />
 
@@ -81,22 +82,22 @@ export function ProjectsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="border-t border-ink"
+          className="border-t border-line"
         >
           {projects.map((project, index) => (
             <motion.li
               key={project.title}
               variants={rowVariants}
-              className="group grid gap-6 border-b border-ink py-10 md:grid-cols-[7rem_1fr_auto] md:gap-10 md:py-14"
+              className="group grid gap-6 border-b border-line py-10 md:grid-cols-[7rem_1fr_auto] md:gap-10 md:py-14"
             >
-              <span className="font-display text-5xl leading-none text-ink/80 transition-colors group-hover:text-poppy md:text-6xl">
+              <span className="text-5xl font-black leading-none tracking-tight text-line transition-colors group-hover:text-yellow-400 md:text-6xl">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
               <div>
-                <h3 className="font-display text-2xl font-medium leading-tight md:text-4xl">{project.title}</h3>
-                <p className="mt-4 max-w-3xl leading-relaxed text-ink/75">{project.description}</p>
-                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-label text-[9px] font-bold uppercase tracking-[0.14em] md:text-[10px]">
+                <h3 className="text-2xl font-black leading-tight tracking-tight md:text-4xl">{project.title}</h3>
+                <p className="mt-4 max-w-3xl leading-relaxed text-dim">{project.description}</p>
+                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.15em]">
                   {project.tags.map((tag) => (
                     <li key={tag} className="flex items-center gap-2">
                       <Mark />
@@ -132,12 +133,12 @@ export function ProjectsSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-20 text-center"
         >
-          <p className="mb-6 font-display text-lg italic text-ink/70">Explore all repositories and contributions on GitHub.</p>
+          <p className="mb-6 text-dim">Explore all repositories and contributions on GitHub.</p>
           <a
             href="https://github.com/priyanshu-3"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-ink px-8 py-4 font-label text-[11px] font-bold uppercase tracking-[0.2em] text-mark transition-colors hover:bg-poppy"
+            className="inline-flex items-center gap-2 border-2 border-yellow-400 bg-yellow-400 px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-zinc-900 transition-colors hover:border-yellow-300 hover:bg-yellow-300"
           >
             View all on GitHub ↗
           </a>

@@ -1,20 +1,18 @@
 /**
  * The story, told as a scroll-driven book: a title page, chapters in a narrow
  * column, and a "DEEP END" spread that splits open as you scroll, pinning the
- * page while the next chapters rise out of the dark and poppies, stamps and a
- * star drift past at different speeds.
+ * page while the next chapters rise out of it.
  *
  * Scroll mechanics adapted from "Alice Scroll Story" by Kedhareswer Naidu
- * (21st.dev, MIT): the pinned split-header reveal, the rising content and the
- * speed-based parallax.
+ * (21st.dev, MIT): the pinned split-header reveal and the rising content.
  */
-import { useLayoutEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { milestones, type Milestone } from "@/data/story";
-import { Mark, Poppy, Spark, Star } from "@/components/poster/marks";
-import { Stamp } from "./Stamp";
+import { Eyebrow, IconTile, Mark, PixelField } from "@/components/theme/marks";
+import { Timeline, TimelineText } from "@/components/ui/hero-with-pixelbackground-utils/timeline";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,25 +33,25 @@ function Chapter({ milestone, number }: { milestone: Milestone; number: number }
 
   return (
     <article className="mb-16 last:mb-0 md:mb-20">
-      <div className="mb-5 flex items-start justify-between gap-6">
-        <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 font-label text-[9px] font-bold uppercase tracking-[0.2em] md:text-[10px]">
+      <div className="mb-5 flex items-center justify-between gap-6">
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.2em] opacity-60">
           <span>Chapter {pad(number)}</span>
-          <span aria-hidden className="opacity-50">·</span>
+          <span aria-hidden className="h-px w-5 bg-current opacity-50" />
           <span>{milestone.category}</span>
-          <span aria-hidden className="opacity-50">·</span>
-          <span className="font-display text-sm font-normal normal-case italic tracking-normal opacity-75">{milestone.period}</span>
+          <span aria-hidden className="h-px w-5 bg-current opacity-50" />
+          <span>{milestone.period}</span>
         </p>
-        <Stamp kind={milestone.kind} size={36} className="rotate-[4deg]" />
+        <IconTile kind={milestone.kind} size={34} className="rotate-[4deg]" />
       </div>
 
-      <h3 className="font-display text-[2rem] font-medium leading-[1.1] md:text-[2.6rem]">{milestone.title}</h3>
-      <p className="mt-2 font-display italic opacity-70">{milestone.subtitle}</p>
-      <p className="mt-6 text-[17px] leading-[1.75] opacity-90 first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:font-script first-letter:text-[3.6rem] first-letter:leading-[0.8] first-letter:text-poppy">
+      <h3 className="text-[2rem] font-black leading-[1.05] tracking-tight md:text-[2.6rem]">{milestone.title}</h3>
+      <p className="mt-2 text-sm font-medium opacity-60 md:text-base">{milestone.subtitle}</p>
+      <p className="mt-6 text-[17px] leading-[1.75] opacity-85 first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:text-[3.4rem] first-letter:font-black first-letter:leading-[0.8] first-letter:text-hi">
         {milestone.text}
       </p>
 
       {milestone.tags && (
-        <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-label text-[9px] font-bold uppercase tracking-[0.14em] opacity-80">
+        <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] opacity-75">
           {milestone.tags.map((tag) => (
             <li key={tag} className="flex items-center gap-2">
               <Mark />
@@ -68,24 +66,24 @@ function Chapter({ milestone, number }: { milestone: Milestone; number: number }
           href={milestone.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-block font-label text-[10px] font-bold uppercase tracking-[0.18em] underline-offset-4 hover:text-poppy hover:underline"
+          className="mt-5 inline-block text-xs font-bold uppercase tracking-[0.2em] underline-offset-4 transition-colors hover:text-hi hover:underline"
         >
           View on GitHub ↗
         </a>
       )}
 
       {isLast && (
-        <div className="mt-8 flex flex-wrap items-center gap-6">
+        <div className="mt-8 flex flex-wrap items-center gap-4">
           <Link
             to="/#contact"
-            className="bg-ink px-5 py-3.5 font-label text-[10px] font-bold uppercase tracking-[0.18em] text-paper transition-colors hover:bg-poppy hover:text-cream"
+            className="border-2 border-yellow-400 bg-yellow-400 px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-zinc-900 transition-colors hover:border-yellow-300 hover:bg-yellow-300"
           >
-            Start a project ↘
+            Start a Project
           </Link>
           <a
             href="/Resume Mehra Priyanshu.pdf"
             download="Resume_Mehra_Priyanshu.pdf"
-            className="font-label text-[10px] font-bold uppercase tracking-[0.18em] underline-offset-4 hover:text-poppy hover:underline"
+            className="border-2 border-line px-6 py-3 text-xs font-bold uppercase tracking-[0.2em] text-dim transition-colors hover:border-ink/50 hover:text-ink"
           >
             Résumé ↓
           </a>
@@ -95,26 +93,17 @@ function Chapter({ milestone, number }: { milestone: Milestone; number: number }
   );
 }
 
-/** A part of the story on plain paper, in a narrow reading column. */
+/** A part of the story on the plain page, in a narrow reading column. */
 function Act({ label, children, after = false }: { label: string; children: ReactNode; after?: boolean }) {
   return (
-    <div className={`relative z-[1] flex justify-center bg-paper text-ink ${after ? "py-24 md:py-32" : "pb-24 md:pb-32"}`}>
+    <div className={`relative z-[1] flex justify-center bg-canvas text-ink ${after ? "py-24 md:py-32" : "pb-24 md:pb-32"}`}>
       <div className="w-full max-w-[36rem] px-5">
-        <p className="mb-14 flex items-center gap-3 border-b border-ink pb-3 font-label text-[9px] uppercase tracking-[0.2em] md:text-[10px]">
-          <Spark className="h-2.5 w-2.5" />
+        <Eyebrow className="mb-14 border-b border-line pb-4">
+          <Mark />
           {label}
-        </p>
+        </Eyebrow>
         {children}
       </div>
-    </div>
-  );
-}
-
-/** Something drifting past in the deep end; `speed` is how much faster than the page it moves. */
-function Drift({ speed, className, style, children }: { speed: number; className: string; style?: CSSProperties; children: ReactNode }) {
-  return (
-    <div data-speed={speed} className={`absolute ${className}`} style={style}>
-      {children}
     </div>
   );
 }
@@ -149,21 +138,6 @@ export function StoryScroll() {
           tl.fromTo(halves[0], { y: "0%" }, { y: "-30%", ease: "power3.inOut" }, 0);
           tl.fromTo(halves[1], { y: "0%" }, { y: "30%", ease: "power3.inOut" }, 0);
         }
-
-        // Parallax: each drifting thing rises faster than the page, by its own speed
-        section.querySelectorAll<HTMLElement>("[data-speed]").forEach((item) => {
-          gsap.to(item, {
-            yPercent: (Number(item.dataset.speed) - 1) * 100,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top top",
-              end: () => "+=" + content.offsetHeight * 3,
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          });
-        });
       });
     }, root);
 
@@ -181,19 +155,40 @@ export function StoryScroll() {
   }, []);
 
   return (
-    <section id="story" ref={root} className="relative overflow-x-clip bg-paper text-ink" aria-label="My story">
+    <section id="story" ref={root} className="relative overflow-x-clip bg-canvas text-ink" aria-label="My story">
       {/* Title page */}
-      <div className="flex min-h-[85vh] flex-col items-center justify-center px-5 py-24 text-center">
-        <p className="mb-10 font-label text-[9px] uppercase tracking-[0.24em] md:text-[10px]">No. 01 · The story so far</p>
-        <h2 className="font-display text-[clamp(2.4rem,7.5vw,6.25rem)] font-medium uppercase leading-[1.05] tracking-[0.02em]">
-          <span className="mr-[0.03em] font-script text-[1.3em] font-normal normal-case leading-[0.7]">F</span>rom first code
-          <br />
-          to production
-        </h2>
-        <p className="mt-8 font-display text-lg italic opacity-70 md:text-xl">
-          Ten chapters, 2019 to today. Scroll on.
-        </p>
-        <Star className="mt-12 h-6 w-10 text-poppy" />
+      <div className="relative flex min-h-[85vh] flex-col items-center justify-center overflow-hidden px-5 py-24 text-center">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
+          style={{
+            maskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+          }}
+        >
+          <PixelField className="h-full w-full" />
+        </div>
+
+        <Eyebrow className="relative mb-8">
+          <span>01</span>
+          <span className="h-px w-8 bg-line" />
+          <span>The story so far</span>
+        </Eyebrow>
+        <h2 className="relative text-[2.4rem] font-black leading-none tracking-tight sm:text-6xl md:text-8xl">From First Code</h2>
+        <div className="relative mt-2">
+          <Timeline
+            rotation={-1.2}
+            initialLeft={0}
+            minWidth={56}
+            containerClassName="bg-canvas"
+            handleClassName="bg-canvas border-yellow-400"
+            handleIndicatorClassName="bg-yellow-400"
+          >
+            <TimelineText className="py-2 text-[2.4rem] font-black leading-none tracking-tight text-hi sm:text-6xl md:text-8xl">
+              To Production
+            </TimelineText>
+          </Timeline>
+        </div>
+        <p className="relative mt-10 text-sm text-dim md:text-base">Ten chapters, 2019 to today. Scroll on.</p>
       </div>
 
       <Act label="Part I · The beginning">
@@ -202,11 +197,11 @@ export function StoryScroll() {
         ))}
       </Act>
 
-      {/* The deep end: a full-page spread that splits open onto the dark */}
-      <div data-reveal className="relative min-h-screen bg-ink text-paper motion-reduce:pb-24">
+      {/* The deep end: a full-page spread that splits open onto the inverted page */}
+      <div data-reveal className="relative min-h-screen bg-ink text-canvas motion-reduce:pb-24">
         <header
           data-reveal-header
-          className="relative z-[1] flex min-h-screen items-center justify-center bg-paper text-ink will-change-transform motion-reduce:min-h-[60vh]"
+          className="relative z-[1] flex min-h-screen items-center justify-center bg-canvas text-ink will-change-transform motion-reduce:min-h-[60vh]"
         >
           <div className="relative flex w-full flex-col items-center justify-center">
             {[0, 1].map((half) => (
@@ -218,8 +213,8 @@ export function StoryScroll() {
                   half === 0 ? "[clip-path:inset(0_0_calc(50%_-_1px)_0)]" : "absolute left-0 top-0 [clip-path:inset(calc(50%_-_1px)_0_0_0)]"
                 }`}
               >
-                <p className="whitespace-nowrap font-display text-[clamp(3.4rem,13.5vw,14rem)] font-medium uppercase leading-none tracking-[0.02em]">
-                  <span className="mr-[0.02em] font-script text-[1.25em] font-normal normal-case leading-[0.7]">D</span>eep end
+                <p className="whitespace-nowrap text-[clamp(3.2rem,14vw,15rem)] font-black uppercase leading-none tracking-tighter">
+                  Deep <span className="text-hi">End</span>
                 </p>
               </div>
             ))}
@@ -228,30 +223,11 @@ export function StoryScroll() {
 
         <div data-reveal-content className="relative flex justify-center -mt-[60vh] motion-reduce:mt-0">
           <div className="relative w-full max-w-[36rem] px-5">
-            {/* Things drifting past: rough positions follow the original's layout */}
-            <div aria-hidden className="pointer-events-none absolute left-0 top-0 z-0">
-              <Drift speed={6} className="-top-[22rem] left-[3rem] h-[11rem] w-[11rem] md:-top-[30rem] md:left-[1rem] md:h-[18rem] md:w-[18rem]">
-                <Poppy className="h-full w-full" />
-              </Drift>
-              <Drift speed={13} className="-left-[3rem] -top-[25rem] md:-left-[6rem]">
-                <Stamp kind="scan" size={96} className="-rotate-6" />
-              </Drift>
-              <Drift speed={15} className="-left-[3rem] -top-[22rem] md:-left-[12rem]">
-                <Stamp kind="agents" size={70} className="rotate-12" />
-              </Drift>
-              <Drift speed={23} className="-top-[19rem] left-[12rem] h-[3.25rem] w-[3.25rem] blur-[2px] md:left-[31rem]">
-                <Poppy className="h-full w-full" />
-              </Drift>
-              <Drift speed={5} className="-top-[20rem] left-[13rem] z-[1] h-[7rem] w-[12rem] blur-[2px] md:-top-[25rem] md:left-[25rem] md:h-[12rem] md:w-[20rem]">
-                <Star className="h-full w-full text-poppy" />
-              </Drift>
-            </div>
-
             <div className="relative pb-32">
-              <p className="mb-14 flex items-center gap-3 border-b border-paper/40 pb-3 font-label text-[9px] uppercase tracking-[0.2em] md:text-[10px]">
-                <Spark className="h-2.5 w-2.5" />
+              <Eyebrow className="mb-14 border-b border-canvas/20 pb-4 !text-canvas/60">
+                <Mark />
                 Part II · The deep end
-              </p>
+              </Eyebrow>
               {DEEP_END.map((m) => (
                 <Chapter key={m.id} milestone={m} number={milestones.indexOf(m) + 1} />
               ))}

@@ -13,21 +13,16 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
-        display: ['"Bodoni Moda"', '"Bodoni 72"', 'Didot', '"Playfair Display"', 'Georgia', 'serif'],
-        script: ['"Pinyon Script"', '"Snell Roundhand"', '"Apple Chancery"', 'cursive'],
-        label: ['Syncopate', 'Michroma', 'Eurostile', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'sans-serif'],
       },
       colors: {
-        // The hero poster's palette, usable with opacity (e.g. border-ink/20).
-        // paper, ink, mark and poppy swap in the dark theme (see index.css).
-        paper: 'rgb(var(--paper) / <alpha-value>)',
+        // The site theme (white and zinc with one yellow highlight); each flips in dark mode (see index.css)
+        canvas: 'rgb(var(--canvas) / <alpha-value>)',
         ink: 'rgb(var(--ink) / <alpha-value>)',
-        mark: 'rgb(var(--mark) / <alpha-value>)',
-        poppy: 'rgb(var(--poppy) / <alpha-value>)',
-        field: '#2b3226',
-        haze: '#b4b4ad',
-        // Always light, for type set on the dark field band in either theme
-        cream: '#f5f2ec',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        line: 'rgb(var(--line) / <alpha-value>)',
+        dim: 'rgb(var(--dim) / <alpha-value>)',
+        hi: 'rgb(var(--hi) / <alpha-value>)',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -69,22 +64,7 @@ export default {
           '5': 'hsl(var(--chart-5))'
         }
       },
-      animation: {
-        spotlight: "spotlight 2s ease .75s 1 forwards",
-      },
-      keyframes: {
-        spotlight: {
-          "0%": {
-            opacity: 0,
-            transform: "translate(-72%, -62%) scale(0.5)",
-          },
-          "100%": {
-            opacity: 1,
-            transform: "translate(-50%,-40%) scale(1)",
-          },
-        },
-      }
     }
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 }

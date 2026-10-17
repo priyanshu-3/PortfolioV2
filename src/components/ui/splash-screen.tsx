@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useEffect } from "react";
 import { AnimatedText } from "./animated-underline-text-one";
 
@@ -14,7 +14,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-paper overflow-hidden"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-canvas overflow-hidden"
       initial={{ y: 0 }}
       exit={{ 
         y: "-100%", 
@@ -22,12 +22,12 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       }}
     >
       <div className="relative flex items-center justify-center">
-        {/* A soft poppy-red bloom behind the word */}
+        {/* A soft yellow glow behind the word */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute h-[400px] w-[400px] rounded-full bg-poppy/10 blur-[100px] pointer-events-none"
+          className="absolute h-[400px] w-[400px] rounded-full bg-yellow-400/15 blur-[100px] pointer-events-none"
         />
         
         <motion.div
@@ -37,8 +37,8 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
           <div className="overflow-visible pb-6">
             <AnimatedText 
               text="Namaste."
-              textClassName="font-display text-6xl font-medium tracking-tight text-ink md:text-8xl"
-              underlineClassName="text-poppy -bottom-8"
+              textClassName="text-6xl font-black tracking-tight text-ink md:text-8xl"
+              underlineClassName="text-yellow-400 -bottom-8"
               underlineDuration={1}
             />
           </div>
@@ -56,7 +56,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
       
       {/* Loading progress bar at the bottom */}
       <motion.div 
-        className="absolute bottom-0 left-0 h-1 bg-poppy"
+        className="absolute bottom-0 left-0 h-1 bg-yellow-400"
         initial={{ width: "0%" }}
         animate={{ width: "100%" }}
         transition={{ duration: 2.8, ease: "easeInOut" }}

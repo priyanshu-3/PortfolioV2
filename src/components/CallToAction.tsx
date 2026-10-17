@@ -2,15 +2,15 @@ import { ScrollSection } from "@/components/ScrollSection";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
-import { Contours, Star } from "@/components/poster/marks";
+import { PixelField } from "@/components/theme/marks";
 
-/** A dark band the colour of the hero's field, inviting a project or a call. */
+/** An inverted band (dark on the light theme, light on the dark), with pixels rising from below. */
 export function CallToActionSection() {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
       cal("ui", {
-        styles: { branding: { brandColor: "#3a2b27" } },
+        styles: { branding: { brandColor: "#facc15" } },
         hideEventTypeDetails: false,
         layout: "month_view",
       });
@@ -18,38 +18,46 @@ export function CallToActionSection() {
   }, []);
 
   return (
-    <ScrollSection className="relative overflow-hidden bg-field px-6 py-28 text-cream md:py-36">
-      <Contours lines={18} className="text-cream opacity-[0.07]" />
+    <ScrollSection className="relative overflow-hidden bg-ink px-6 py-28 text-canvas md:py-36">
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-72"
+        style={{
+          maskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+        }}
+      >
+        <PixelField on="ink" className="h-full w-full" />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <Star className="mx-auto mb-10 h-10 w-16 text-poppy md:h-12 md:w-20" />
-        <p className="mb-6 font-label text-[9px] font-bold uppercase tracking-[0.24em] text-cream/70 md:text-[10px]">
-          An open invitation
+        <p className="mb-8 flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-canvas/50">
+          <span>Open invitation</span>
+          <span className="h-px w-8 bg-canvas/30" />
+          <span>Free session</span>
         </p>
-        <h2 className="mb-8 font-display text-4xl font-medium uppercase leading-[1.02] tracking-[0.02em] md:text-7xl">
-          <span className="mr-[0.03em] font-script text-[1.3em] font-normal normal-case leading-[0.7]">B</span>ook your free session,{" "}
-          <br className="hidden md:block" />
-          power up your project's future
+        <h2 className="mb-8 text-4xl font-black leading-[0.95] tracking-tight md:text-7xl">
+          Book your free session.{" "}
+          <span className="text-yellow-400 dark:text-yellow-500">Power up your project.</span>
         </h2>
 
-        <p className="mx-auto mb-12 max-w-3xl font-display text-xl italic text-cream/75 md:text-2xl">
+        <p className="mx-auto mb-12 max-w-2xl text-base leading-relaxed text-canvas/60 md:text-lg">
           I bring big ideas to life with clear, sharp, meaningful design and craft them with expert, purposeful development.
         </p>
 
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             to="/#contact"
-            className="bg-poppy px-8 py-4 font-label text-[11px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-cream hover:text-field"
+            className="border-2 border-yellow-400 bg-yellow-400 px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-zinc-900 transition-colors hover:border-yellow-300 hover:bg-yellow-300"
           >
-            Start a project ↘
+            Start a Project
           </Link>
 
           <button
             data-cal-link="priyanshu_3"
             data-cal-config='{"layout":"month_view"}'
-            className="cursor-pointer border border-cream/60 px-8 py-4 font-label text-[11px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:border-cream hover:bg-cream hover:text-field"
+            className="cursor-pointer border-2 border-canvas/25 px-8 py-3 text-xs font-bold uppercase tracking-[0.2em] text-canvas/70 transition-colors hover:border-canvas/60 hover:text-canvas"
           >
-            Schedule a call ↗
+            Schedule a Call
           </button>
         </div>
       </div>

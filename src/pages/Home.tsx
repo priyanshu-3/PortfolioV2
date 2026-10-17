@@ -1,10 +1,9 @@
-import { HeroPoster } from "@/components/HeroPoster";
+import { HeroPixel } from "@/components/HeroPixel";
 import { StoryScroll } from "@/components/story/StoryScroll";
 import { SkillsSection } from "@/components/SkillsSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { ContactForm } from "@/components/ui/contact-sections";
 import { CallToActionSection } from "@/components/CallToAction";
-import { Mark } from "@/components/poster/marks";
 import { sections } from "@/data/sections";
 import { Link } from "react-router-dom";
 
@@ -12,7 +11,7 @@ export function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero: a printed poster over a field of poppies */}
-      <HeroPoster />
+      <HeroPixel />
 
       {/* The story: education, projects, internship and work, told as a book you scroll through */}
       <StoryScroll />
@@ -29,21 +28,21 @@ export function Home() {
         <ContactForm />
       </section>
 
-      {/* Footer: the section links live here too, since the top bar is gone */}
-      <footer className="border-t border-ink px-4 py-12 text-ink sm:px-6 lg:px-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 md:flex-row md:justify-between">
-          <p className="font-display text-2xl font-medium uppercase tracking-[0.02em]">
-            <span className="mr-[0.03em] font-script text-[1.3em] font-normal leading-[0.7]">P</span>riyanshu Mehra
-          </p>
-          <nav aria-label="Sections" className="flex flex-wrap justify-center gap-x-6 gap-y-3 font-label text-[9px] font-bold uppercase tracking-[0.18em] md:text-[10px]">
+      {/* Footer: the logo, the section links and the year */}
+      <footer className="border-t border-line px-6 py-10 text-ink">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 md:flex-row md:justify-between">
+          <Link to="/" className="flex items-center gap-2">
+            <span className="size-6 rounded-md bg-yellow-400" />
+            <span className="text-base font-bold">Priyanshu Mehra</span>
+          </Link>
+          <nav aria-label="Sections" className="flex flex-wrap justify-center gap-x-7 gap-y-3">
             {sections.map((section) => (
-              <Link key={section.href} to={section.href} className="flex items-center gap-2 underline-offset-4 hover:text-poppy hover:underline">
-                <Mark />
+              <Link key={section.href} to={section.href} className="text-sm font-medium text-dim transition-colors hover:text-ink">
                 {section.label}
               </Link>
             ))}
           </nav>
-          <p className="font-label text-[9px] uppercase tracking-[0.18em] text-ink/70">© {new Date().getFullYear()} Priyanshu Mehra</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-dim">© {new Date().getFullYear()} Priyanshu Mehra</p>
         </div>
       </footer>
     </div>

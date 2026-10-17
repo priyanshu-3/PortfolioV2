@@ -1,6 +1,6 @@
-import { motion, type Variants } from "framer-motion";
-import { PosterHeading } from "@/components/poster/PosterHeading";
-import { Mark } from "@/components/poster/marks";
+import { motion, type Variants } from "motion/react";
+import { SectionHeading } from "@/components/theme/SectionHeading";
+import { Mark } from "@/components/theme/marks";
 
 /* ─────────────────────────────────────────────
    Skill categories data
@@ -60,22 +60,22 @@ const itemVariants: Variants = {
 };
 
 /* ─────────────────────────────────────────────
-   One category, printed as a cell of the grid
+   One category, a cell of the ruled grid
    ───────────────────────────────────────────── */
 function SkillCategoryCard({ cat, index }: { cat: (typeof skillCategories)[0]; index: number }) {
   return (
-    <motion.div variants={itemVariants} className="group border-b border-r border-ink p-7 md:p-10">
+    <motion.div variants={itemVariants} className="group border-b border-r border-line bg-canvas p-7 transition-colors hover:bg-surface md:p-10">
       <div className="flex items-start justify-between gap-4">
-        <span className="font-label text-[9px] font-bold uppercase tracking-[0.2em] md:text-[10px]">{cat.subtitle}</span>
-        <span className="font-display text-4xl leading-none text-ink/80 transition-colors group-hover:text-poppy md:text-5xl">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-dim">{cat.subtitle}</span>
+        <span className="text-5xl font-black leading-none tracking-tight text-line transition-colors group-hover:text-yellow-400 md:text-6xl">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
 
-      <h3 className="mt-6 font-display text-3xl font-medium leading-tight md:text-4xl">{cat.title}</h3>
-      <p className="mt-4 max-w-md leading-relaxed text-ink/75">{cat.bio}</p>
+      <h3 className="mt-6 text-2xl font-black tracking-tight md:text-3xl">{cat.title}</h3>
+      <p className="mt-3 max-w-md leading-relaxed text-dim">{cat.bio}</p>
 
-      <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-ink/25 pt-6 font-label text-[9px] font-bold uppercase tracking-[0.14em] md:text-[10px]">
+      <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6 text-[11px] font-semibold uppercase tracking-[0.15em]">
         {cat.skills.map((skill) => (
           <li key={skill} className="flex items-center gap-2">
             <Mark />
@@ -98,19 +98,19 @@ export function SkillSectionBlock() {
           initial={{ opacity: 0, y: -24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           id="skills-heading"
         >
-          <PosterHeading number="02" label="What I work with" title="Skills & Technologies" />
+          <SectionHeading number="02" label="What I work with" title="Skills &" highlight="Technologies" />
         </motion.div>
 
-        {/* 2×2 grid, ruled like a printed table */}
+        {/* 2×2 grid, ruled like a table */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid border-l border-t border-ink sm:grid-cols-2"
+          className="grid border-l border-t border-line sm:grid-cols-2"
         >
           {skillCategories.map((cat, i) => (
             <SkillCategoryCard key={cat.title} cat={cat} index={i} />

@@ -3,7 +3,7 @@ import { Home } from "@/pages/Home";
 import { useEffect, useState } from "react";
 import { SplashScreen } from "@/components/ui/splash-screen";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { AnimatePresence, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion } from "motion/react";
 import { useLenis, smoothScrollTo } from "@/hooks/useLenis";
 
 /** Scrolls to the section named by the URL: "/#projects", or an old page URL like "/projects". */
@@ -44,7 +44,7 @@ function App() {
       </AnimatePresence>
 
       <BrowserRouter>
-        {!showSplash && <ThemeToggle />}
+        {!showSplash && <ThemeToggle floating />}
         <ScrollToSection />
         {/* Everything lives on one page; any path renders it */}
         <Routes>

@@ -12,7 +12,7 @@ const read = (): Theme => (document.documentElement.classList.contains("dark") ?
 function apply(theme: Theme) {
   const root = document.documentElement;
   root.classList.toggle("dark", theme === "dark");
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#14110f" : "#eae8e2");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0a0a0a" : "#ffffff");
   try {
     localStorage.setItem(KEY, theme);
   } catch {
@@ -31,32 +31,47 @@ export function useTheme() {
   return useSyncExternalStore(subscribe, read, () => "light" as Theme);
 }
 
+let switching = false;
+
 /**
  * Switches theme. Where the browser supports view transitions, the new theme
- * grows out of the given point (the toggle) in a circle; otherwise it just swaps.
+ * grows out of the given point (the toggle) in a circle; elsewhere the colours
+ * fade across. Nothing on the page is rebuilt for the switch (even the pixel
+ * fields just flip by CSS), so the reveal starts at once and stays smooth.
  */
 export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
+  // A second click mid-switch would restart the reveal from scratch; let the first one finish
+  if (switching) return;
+  switching = true;
+
   const root = document.documentElement;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const doc = document as Document & {
-    startViewTransition?: (update: () => Promise<void>) => { ready: Promise<void>; finished: Promise<void> };
+    startViewTransition?: (update: () => void) => { ready: Promise<void>; finished: Promise<void> };
   };
-  // Elements' own colour fades would lag behind the swap, so they're paused while it happens
-  root.classList.add("theme-switching");
-  const done = () => root.classList.remove("theme-switching");
 
   if (!doc.startViewTransition || reduced || !origin) {
+    // No view transitions: fade every colour across instead of jumping
+    root.classList.add(reduced ? "theme-switching" : "theme-fading");
     apply(theme);
-    requestAnimationFrame(() => requestAnimationFrame(done));
+    window.setTimeout(() => {
+      root.classList.remove("theme-switching", "theme-fading");
+      switching = false;
+    }, reduced ? 0 : 400);
     return;
   }
 
-  const transition = doc.startViewTransition(async () => {
-    // Render React (the poster and 3D palettes) before the new page is captured
-    flushSync(() => apply(theme));
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-  });
+  // During the reveal, elements' own colour fades would lag behind it, so they're paused
+  root.classList.add("theme-switching");
+  const done = () => {
+    root.classList.remove("theme-switching");
+    switching = false;
+  };
 
+  const transition = doc.startViewTransition(() => {
+    // Only the toggles re-render; flushSync gets them into the new snapshot
+    flushSync(() => apply(theme));
+  });
   transition.finished.then(done, done);
   // Never leave hover fades switched off for long, even if the transition stalls
   window.setTimeout(done, 1500);
@@ -65,9 +80,9 @@ export function setTheme(theme: Theme, origin?: { x: number; y: number }) {
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
   transition.ready
     .then(() => {
-      document.documentElement.animate(
+      root.animate(
         { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-        { duration: 650, easing: "cubic-bezier(0.65, 0, 0.35, 1)", pseudoElement: "::view-transition-new(root)" }
+        { duration: 550, easing: "cubic-bezier(0.4, 0, 0.2, 1)", pseudoElement: "::view-transition-new(root)" }
       );
     })
     // A very slow device can time the transition out; the theme has still switched, just without the circle

@@ -4,7 +4,7 @@ export default function Contact() {
 
 import { useState, FormEvent, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'motion/react';
 import { Check, X } from 'lucide-react';
 
 export function ContactForm() {
@@ -58,16 +58,17 @@ export function ContactForm() {
         }
     };
 
-    const inputClass = "w-full bg-transparent border-b border-ink/35 py-4 text-ink placeholder:text-ink/45 outline-none focus:border-ink transition-colors duration-300 text-base";
+    const inputClass = "w-full bg-transparent border-b-2 border-line py-4 text-ink placeholder:text-dim outline-none focus:border-yellow-400 transition-colors duration-300 text-base";
 
     return (
         <>
         <main className="py-24 px-4 sm:px-6 lg:px-10 text-ink" ref={ref}>
             <div className="max-w-6xl mx-auto">
-                <div className="mb-14 flex items-center justify-between border-b border-ink pb-3 font-label text-[9px] uppercase tracking-[0.2em] md:mb-20 md:text-[10px]">
-                    <span>No. 04</span>
+                <p className="mb-14 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-dim md:mb-20">
+                    <span>04</span>
+                    <span className="h-px w-8 bg-line" />
                     <span>Contact</span>
-                </div>
+                </p>
                 <motion.div
                     className="grid lg:grid-cols-2 gap-16 lg:gap-24"
                     initial={{ opacity: 0, y: 50 }}
@@ -81,12 +82,11 @@ export function ContactForm() {
                             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
                             transition={{ duration: 0.8, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.99] as const }}
                         >
-                            <h2 className="font-display text-[2.6rem] font-medium uppercase leading-[0.98] tracking-[0.02em] sm:text-5xl md:text-6xl">
-                                <span className="mr-[0.03em] font-script text-[1.3em] font-normal normal-case leading-[0.7]">L</span>et's start<br />
-                                a project<br />
-                                together
+                            <h2 className="text-5xl font-black leading-[0.95] tracking-tight md:text-6xl lg:text-7xl">
+                                Let's start a<br />
+                                project <span className="text-hi">together</span>
                             </h2>
-                            <p className="mt-8 text-ink/75 text-lg max-w-md leading-relaxed">
+                            <p className="mt-8 text-dim text-lg max-w-md leading-relaxed">
                                 I develop clear websites with code that empower startups and businesses capture new leads and accelerate their growth.
                             </p>
                         </motion.div>
@@ -97,15 +97,15 @@ export function ContactForm() {
                             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
                         >
-                            <p className="font-label text-[9px] font-bold uppercase tracking-[0.2em] mb-4">Socials</p>
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-dim mb-4">Socials</p>
                             <div className="flex items-center gap-6">
-                                <a href="https://www.linkedin.com/in/priyanshu-mehra-060070245/" target="_blank" rel="noopener noreferrer" className="font-display text-lg italic text-ink/75 underline-offset-4 hover:text-poppy hover:underline transition-colors">
+                                <a href="https://www.linkedin.com/in/priyanshu-mehra-060070245/" target="_blank" rel="noopener noreferrer" className="text-base font-semibold text-ink underline-offset-4 decoration-yellow-400 decoration-2 hover:underline transition-colors">
                                     LinkedIn
                                 </a>
-                                <a href="https://www.instagram.com/priyanshu_3/" target="_blank" rel="noopener noreferrer" className="font-display text-lg italic text-ink/75 underline-offset-4 hover:text-poppy hover:underline transition-colors">
+                                <a href="https://www.instagram.com/priyanshu_3/" target="_blank" rel="noopener noreferrer" className="text-base font-semibold text-ink underline-offset-4 decoration-yellow-400 decoration-2 hover:underline transition-colors">
                                     Instagram
                                 </a>
-                                <a href="https://github.com/priyanshu-3" target="_blank" rel="noopener noreferrer" className="font-display text-lg italic text-ink/75 underline-offset-4 hover:text-poppy hover:underline transition-colors">
+                                <a href="https://github.com/priyanshu-3" target="_blank" rel="noopener noreferrer" className="text-base font-semibold text-ink underline-offset-4 decoration-yellow-400 decoration-2 hover:underline transition-colors">
                                     Github
                                 </a>
                             </div>
@@ -163,9 +163,9 @@ export function ContactForm() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full py-5 bg-ink text-mark font-label text-[11px] font-bold uppercase tracking-[0.22em] hover:bg-poppy transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full py-4 border-2 border-yellow-400 bg-yellow-400 text-zinc-900 text-xs font-bold uppercase tracking-[0.2em] hover:bg-yellow-300 hover:border-yellow-300 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {isSubmitting ? 'Sending…' : 'Send message ↗'}
+                                {isSubmitting ? 'Sending…' : 'Send Message'}
                             </button>
                         </div>
                     </motion.form>
@@ -183,10 +183,10 @@ export function ContactForm() {
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     className="fixed top-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-auto z-[9999]"
                 >
-                    <div className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-mark border border-ink text-ink shadow-[4px_4px_0_0_rgb(var(--ink))] md:min-w-[320px]">
+                    <div className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 rounded-xl bg-canvas border border-line text-ink shadow-xl md:min-w-[320px]">
                         {/* Icon */}
-                        <div className={`flex items-center justify-center w-10 h-10 shrink-0 text-mark ${
-                            submitStatus === 'success' ? 'bg-ink' : 'bg-poppy'
+                        <div className={`flex items-center justify-center w-10 h-10 shrink-0 rounded-lg ${
+                            submitStatus === 'success' ? 'bg-yellow-400 text-zinc-900' : 'bg-red-500 text-white'
                         }`}>
                             {submitStatus === 'success' ? (
                                 <Check className="w-5 h-5" strokeWidth={2.5} />
@@ -197,10 +197,10 @@ export function ContactForm() {
 
                         {/* Text */}
                         <div>
-                            <p className="font-display font-medium">
+                            <p className="font-semibold">
                                 {submitStatus === 'success' ? 'Success' : 'Something went wrong'}
                             </p>
-                            <p className="text-ink/65 text-sm mt-0.5">
+                            <p className="text-dim text-sm mt-0.5">
                                 {submitStatus === 'success' 
                                     ? 'I will contact you shortly.' 
                                     : 'Please try again later.'}
@@ -211,7 +211,7 @@ export function ContactForm() {
                         <button 
                             onClick={() => setSubmitStatus('idle')}
                             aria-label="Dismiss"
-                            className="ml-auto text-ink/50 hover:text-ink transition-colors p-1"
+                            className="ml-auto text-dim hover:text-ink transition-colors p-1"
                         >
                             <X className="w-4 h-4" />
                         </button>
@@ -219,7 +219,7 @@ export function ContactForm() {
 
                     {/* Auto-dismiss progress bar */}
                     <motion.div 
-                        className="h-[2px] bg-poppy mt-1 mx-2"
+                        className="h-[2px] bg-yellow-400 mt-1 mx-2"
                         initial={{ width: "100%" }}
                         animate={{ width: "0%" }}
                         transition={{ duration: 4, ease: "linear" }}
